@@ -1,0 +1,154 @@
+{
+  "brand": {
+    "name": "ReConfi",
+    "tagline": "微笑設計專家",
+    "description": "自信重新，由微笑開始",
+    "contact": {
+      "phone": "+852 6530 6270",
+      "whatsapp": "+852 6530 6270",
+      "email": "info@reconfi.com"
+    }
+  },
+  "prices": [
+    {
+      "id": "emax-press",
+      "name": "IPS e.max Press 壓鑄陶瓷",
+      "brand": "ivoclar",
+      "price": 3380,
+      "description": "高品質壓鑄陶瓷，自然美觀效果，適合一般美觀需求"
+    },
+    {
+      "id": "empress-cad",
+      "name": "IPS Empress CAD 玻璃切割瓷",
+      "brand": "ivoclar",
+      "price": 4080,
+      "description": "精密玻璃切割技術，自然透光效果，美觀度極佳"
+    },
+    {
+      "id": "emax-cad",
+      "name": "IPS e.max CAD 藍瓷",
+      "brand": "ivoclar",
+      "price": 5080,
+      "description": "高品質藍瓷材料，自然美觀效果，耐用性強"
+    },
+    {
+      "id": "suprinity",
+      "name": "SUPRINITY 琥珀瓷",
+      "brand": "VITA",
+      "price": 5380,
+      "description": "頂級琥珀瓷材料，自然透光效果，最高品質"
+    },
+    {
+      "id": "celtra-duo",
+      "name": "Celtra Duo 靈犀瓷",
+      "brand": "Dentsply Sirona",
+      "price": 7480,
+      "description": "專業靈犀瓷技術，自然美觀效果，專業級品質"
+    },
+    {
+      "id": "emax-press-ceram",
+      "name": "IPS e.max Press + Ceram 半手工瓷",
+      "brand": "ivoclar",
+      "price": 9380,
+      "description": "壓鑄陶瓷配合手工烤瓷，完美結合技術與藝術"
+    },
+    {
+      "id": "emax-ceram",
+      "name": "IPS e.max Ceram 全手工烤瓷",
+      "brand": "ivoclar",
+      "price": 15680,
+      "description": "全手工烤瓷技術，最高品質，完美笑容設計"
+    }
+  ],
+  "customerCases": [
+    {
+      "id": 1,
+      "type": "testimonial",
+      "name": "陳小姐",
+      "age": 28,
+      "rating": 5,
+      "content": "做了陶瓷貼片後，我的笑容變得更加自信了！醫生技術很好，整個過程都很舒適。現在拍照時再也不怕露出牙齒了，朋友都說我的笑容比以前自然很多。",
+      "treatment": "前牙16顆陶瓷貼片",
+      "image": "/35.png",
+      "title": "前牙美觀改善案例",
+      "description": "通過陶瓷貼片改善前牙外觀，提升笑容自信，讓客戶重拾自信笑容",
+      "results": [
+        "牙齒排列更整齊",
+        "顏色更自然亮白",
+        "笑容更自信自然",
+        "整體美觀度提升"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "testimonial",
+      "name": "李先生",
+      "age": 35,
+      "rating": 5,
+      "content": "因為牙齒變色一直很困擾，做了陶瓷貼片後效果非常好，顏色很自然，朋友都說看不出來是貼片。ReConfi的服務真的很專業，從諮詢到完成治療都很貼心。",
+      "treatment": "前牙16顆陶瓷貼片",
+      "image": "/36.png",
+      "title": "牙齒變色改善案例",
+      "description": "專業牙齒美白，讓笑容更加亮麗",
+      "results": [
+        "牙齒更加潔白",
+        "笑容更加亮麗",
+        "自信心增強",
+        "整體形象提升"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "testimonial",
+      "name": "王小姐",
+      "age": 32,
+      "rating": 5,
+      "content": "ReConfi Smile的服務真的很專業，從諮詢到完成治療都很貼心。現在的笑容比以前漂亮很多！每次開口都更有自信，連工作都變得更有動力。",
+      "treatment": "前牙8顆陶瓷貼片",
+      "image": "/37.png",
+      "title": "笑容設計案例",
+      "description": "專業笑容設計，度身訂造專屬笑容，讓每個笑容都完美",
+      "results": [
+        "笑容更和諧",
+        "臉型更協調",
+        "氣質更優雅",
+        "生活品質提升"
+      ]
+    }
+  ],
+  "blogPosts": [
+    {
+      "id": 1,
+      "title": "陶瓷貼片 vs 牙齒美白：哪個更適合您？",
+      "excerpt": "了解陶瓷貼片和牙齒美白的差異，選擇最適合您的笑容改善方案...",
+      "content": "<p>在追求完美笑容的道路上，許多人會面臨一個重要選擇：陶瓷貼片還是牙齒美白？這兩種方法都能改善牙齒外觀，但它們適用於不同的情況和需求。</p><h2>陶瓷貼片的優勢</h2><p>陶瓷貼片是一種薄如紙片的陶瓷材料，貼在牙齒表面來改善外觀。這種方法特別適合：</p><ul><li>牙齒變色嚴重，美白效果有限的情況</li><li>牙齒有輕微不整齊或形狀不理想</li><li>牙齒有裂縫、缺口或磨損</li><li>希望獲得長期、穩定的美觀效果</li></ul>",
+      "date": "2025-01-15",
+      "readTime": "5 分鐘",
+      "category": "牙科美容",
+      "author": "ReConfi 專業團隊",
+      "isPublished": true
+    },
+    {
+      "id": 2,
+      "title": "如何選擇適合的陶瓷貼片材料",
+      "excerpt": "從 IPS e.max 到 VITA SUPRINITY，了解各種陶瓷材料的特點和適用情況...",
+      "content": "<p>陶瓷貼片的材料選擇直接影響治療效果和使用壽命。了解不同材料的特點，能幫助您做出更明智的選擇。</p><h2>IPS e.max 系列</h2><p>IPS e.max 是市場上最受歡迎的陶瓷材料之一：</p><ul><li><strong>IPS e.max Press</strong>：壓鑄技術，強度高，適合後牙</li><li><strong>IPS e.max CAD</strong>：電腦輔助設計，精密度高，適合前牙</li><li><strong>IPS e.max Ceram</strong>：手工烤瓷，藝術性強，適合高要求案例</li></ul>",
+      "date": "2025-01-10",
+      "readTime": "7 分鐘",
+      "category": "材料介紹",
+      "author": "ReConfi 專業團隊",
+      "isPublished": true
+    },
+    {
+      "id": 3,
+      "title": "陶瓷貼片治療流程全攻略",
+      "excerpt": "從諮詢到完成，詳細了解陶瓷貼片治療的每個步驟和注意事項...",
+      "content": "<p>了解陶瓷貼片的完整治療流程，能幫助您做好心理準備，確保治療順利進行。</p><h2>第一次診療：諮詢和設計</h2><p>這是整個治療過程中最重要的一步：</p><ul><li>詳細的口腔檢查和評估</li><li>討論您的期望和需求</li><li>制定個性化治療方案</li><li>選擇適合的陶瓷材料</li><li>拍攝口腔照片和X光片</li></ul>",
+      "date": "2025-01-05",
+      "readTime": "6 分鐘",
+      "category": "治療流程",
+      "author": "ReConfi 專業團隊",
+      "isPublished": true
+    }
+  ]
+}

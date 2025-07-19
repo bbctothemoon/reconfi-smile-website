@@ -1,0 +1,40 @@
+{
+  "promoCodes": [
+    {
+      "id": 1,
+      "code": "rcsimon",
+      "type": "fixed",
+      "value": 500,
+      "description": "固定折扣 HK$ 500",
+      "isActive": true,
+      "usageCount": 0,
+      "maxUsage": 100,
+      "validFrom": "2025-01-01",
+      "validTo": "2025-12-31"
+    },
+    {
+      "id": 2,
+      "code": "reconfi2025",
+      "type": "percentage",
+      "value": 10,
+      "description": "10% 折扣",
+      "isActive": true,
+      "usageCount": 0,
+      "maxUsage": 50,
+      "validFrom": "2025-01-01",
+      "validTo": "2025-12-31"
+    },
+    {
+      "id": 3,
+      "code": "smile",
+      "type": "percentage",
+      "value": 5,
+      "description": "5% 折扣",
+      "isActive": true,
+      "usageCount": 0,
+      "maxUsage": 200,
+      "validFrom": "2025-01-01",
+      "validTo": "2025-12-31"
+    }
+  ]
+} 
