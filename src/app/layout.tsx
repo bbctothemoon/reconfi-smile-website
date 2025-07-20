@@ -1,31 +1,28 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 
+const inter = Inter({ subsets: ['latin'] });
+
 export const metadata: Metadata = {
   title: {
-    default: "ReConfi Smile - 專業陶瓷貼片服務 | 香港",
-    template: "%s | ReConfi Smile"
+    default: 'ReConfi Smile - 專業牙科美容服務',
+    template: '%s | ReConfi Smile'
   },
-  description: "ReConfi Smile 提供專業的陶瓷貼片服務，讓您擁有完美的笑容。使用國際品牌材料，資深牙醫團隊，為您度身訂造自然、自信的完美笑容。立即預約諮詢。",
+  description: 'ReConfi Smile 提供專業的牙科美容服務，包括陶瓷貼片、笑容設計等。讓您擁有自信完美的笑容。',
   keywords: [
-    "陶瓷貼片",
-    "牙科美容", 
-    "笑容設計",
-    "香港牙醫",
-    "ReConfi Smile",
-    "牙齒美白",
-    "前牙美觀",
-    "牙科診所",
-    "牙科服務",
-    "牙科治療",
-    "牙科諮詢",
-    "牙科預約"
+    '牙科美容',
+    '陶瓷貼片',
+    '笑容設計',
+    '香港牙科',
+    'ReConfi Smile',
+    '牙科診所'
   ],
-  authors: [{ name: "ReConfi Smile" }],
-  creator: "ReConfi Smile",
-  publisher: "ReConfi Smile",
+  authors: [{ name: 'ReConfi Smile' }],
+  creator: 'ReConfi Smile',
+  publisher: 'ReConfi Smile',
   formatDetection: {
     email: false,
     address: false,
@@ -34,6 +31,28 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://reconfihk.com'),
   alternates: {
     canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'zh_HK',
+    url: 'https://reconfihk.com',
+    title: 'ReConfi Smile - 專業牙科美容服務',
+    description: 'ReConfi Smile 提供專業的牙科美容服務，包括陶瓷貼片、笑容設計等。讓您擁有自信完美的笑容。',
+    siteName: 'ReConfi Smile',
+    images: [
+      {
+        url: '/logo-blue.png',
+        width: 1200,
+        height: 630,
+        alt: 'ReConfi Smile Logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ReConfi Smile - 專業牙科美容服務',
+    description: 'ReConfi Smile 提供專業的牙科美容服務，包括陶瓷貼片、笑容設計等。',
+    images: ['/logo-blue.png'],
   },
   robots: {
     index: true,
@@ -46,36 +65,6 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/logo-blue.png', type: 'image/png' }
-    ],
-    apple: '/logo-blue.png',
-  },
-  manifest: '/manifest.json',
-  openGraph: {
-    type: 'website',
-    locale: 'zh_HK',
-    url: 'https://reconfihk.com',
-    title: 'ReConfi Smile - 專業陶瓷貼片服務 | 香港',
-    description: 'ReConfi Smile 提供專業的陶瓷貼片服務，讓您擁有完美的笑容。使用國際品牌材料，資深牙醫團隊，為您度身訂造自然、自信的完美笑容。',
-    siteName: 'ReConfi Smile',
-    images: [
-      {
-        url: '/logo-blue.png',
-        width: 1200,
-        height: 630,
-        alt: 'ReConfi Smile - 專業陶瓷貼片服務',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'ReConfi Smile - 專業陶瓷貼片服務 | 香港',
-    description: 'ReConfi Smile 提供專業的陶瓷貼片服務，讓您擁有完美的笑容。',
-    images: ['/logo-blue.png'],
-  },
   verification: {
     google: 'your-google-verification-code',
   },
@@ -83,38 +72,35 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="zh-HK">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="//www.google-analytics.com" />
-        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
-      </head>
-      <body className="font-sans antialiased">
-        <Navigation />
-        <main>{children}</main>
-        <Footer />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/logo-blue.png" />
+        <meta name="theme-color" content="#3B82F6" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         
-        {/* Structured Data */}
+        {/* 結構化數據 */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "DentalClinic",
+              "@type": "Dentist",
               "name": "ReConfi Smile",
-              "description": "專業的陶瓷貼片服務，讓您擁有完美的笑容",
+              "description": "專業牙科美容服務，包括陶瓷貼片、笑容設計等",
               "url": "https://reconfihk.com",
-              "telephone": "+85265306270",
-              "email": "info@reconfihk.com",
+              "logo": "https://reconfihk.com/logo-blue.png",
+              "image": "https://reconfihk.com/logo-blue.png",
+              "telephone": "+852 6530 6270",
+              "email": "info@reconfi.com",
               "address": {
                 "@type": "PostalAddress",
-                "addressLocality": "香港",
-                "addressCountry": "HK"
+                "addressCountry": "HK",
+                "addressRegion": "Hong Kong"
               },
               "geo": {
                 "@type": "GeoCoordinates",
@@ -123,12 +109,9 @@ export default function RootLayout({
               },
               "openingHours": "Mo-Fr 09:00-18:00",
               "priceRange": "$$",
-              "sameAs": [
-                "https://instagram.com/reconfihk"
-              ],
-              "serviceType": "陶瓷貼片服務",
-              "areaServed": "香港",
-              "medicalSpecialty": "牙科美容",
+              "paymentAccepted": "Cash, Credit Card",
+              "currenciesAccepted": "HKD",
+              "medicalSpecialty": "Dental Care",
               "availableService": [
                 {
                   "@type": "MedicalProcedure",
@@ -140,18 +123,22 @@ export default function RootLayout({
                   "name": "笑容設計",
                   "description": "個人化笑容設計服務"
                 }
-              ],
-              "logo": {
-                "@type": "ImageObject",
-                "url": "https://reconfihk.com/logo-blue.png"
-              },
-              "image": {
-                "@type": "ImageObject",
-                "url": "https://reconfihk.com/logo-blue.png"
-              }
+              ]
             })
           }}
         />
+      </head>
+      <body className={inter.className}>
+        <Navigation />
+        <main className="min-h-screen">
+          {children}
+        </main>
+        <Footer />
+        
+        {/* 版本號顯示 */}
+        <div className="fixed bottom-4 right-4 bg-gray-800 text-white px-3 py-1 rounded-full text-xs opacity-75 hover:opacity-100 transition-opacity">
+          v1.2.0
+        </div>
       </body>
     </html>
   );

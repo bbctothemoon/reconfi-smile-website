@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getBlogPostBySlug } from '@/lib/airtable';
+import { getBlogPost } from '@/lib/content';
 
 export async function GET(
   request: Request,
@@ -7,21 +7,14 @@ export async function GET(
 ) {
   try {
     const { slug } = await params;
-    const post = await getBlogPostBySlug(slug);
+    const post = getBlogPost(slug);
     
     if (!post) {
-      return NextResponse.json(
-        { error: 'Blog post not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: '文章未找到' }, { status: 404 });
     }
-
+    
     return NextResponse.json(post);
   } catch (error) {
-    console.error('Error in blog post API:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch blog post' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: '服務器錯誤' }, { status: 500 });
   }
 } 

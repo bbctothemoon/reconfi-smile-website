@@ -1,55 +1,59 @@
 import { MetadataRoute } from 'next';
-import { getBlogPosts } from '@/lib/airtable';
-import { getBlogPostsFromCSV } from '@/lib/csv-content';
+import { getBlogPosts, getBlogCategories, BlogPost } from '@/lib/content';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://reconfihk.com';
   
-  // 基本頁面
-  const staticPages: MetadataRoute.Sitemap = [
+  // 靜態頁面
+  const staticPages = [
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'weekly' as const,
       priority: 1,
     },
     {
       url: `${baseUrl}/blog`,
       lastModified: new Date(),
-      changeFrequency: 'daily',
+      changeFrequency: 'daily' as const,
       priority: 0.8,
     },
   ];
 
-  // 動態部落格頁面
-  let blogPosts: Array<{ slug: string; publishedAt: string }> = [];
+  // 動態頁面 - 部落格文章
+  let blogPosts: BlogPost[] = [];
   
   try {
-    blogPosts = await getBlogPosts();
+    blogPosts = getBlogPosts();
   } catch (error) {
     console.error('Error fetching blog posts for sitemap:', error);
-    // 如果Airtable失敗，使用CSV備用數據
-    try {
-      blogPosts = await getBlogPostsFromCSV();
-    } catch (csvError) {
-      console.error('Error fetching CSV data for sitemap:', csvError);
-    }
+    // 使用空數組作為fallback
+    blogPosts = [];
   }
 
-  const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.publishedAt),
+  const blogPages = blogPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug || post.id}`,
+    lastModified: new Date(post.date),
     changeFrequency: 'monthly' as const,
     priority: 0.6,
   }));
 
-  // 分類頁面
-  const categories = ['陶瓷貼片', '笑容設計', '牙科美容', '護理指南'];
-  const categoryPages: MetadataRoute.Sitemap = categories.map((category) => ({
-    url: `${baseUrl}/blog/category/${category.toLowerCase().replace(/\s+/g, '-')}`,
+  // 動態頁面 - 部落格分類
+  let categories: ReturnType<typeof getBlogCategories> = [];
+  
+  try {
+    categories = getBlogCategories();
+  } catch (error) {
+    console.error('Error fetching categories for sitemap:', error);
+    // 使用空數組作為fallback
+    categories = [];
+  }
+
+  const categoryPages = categories.map((category) => ({
+    url: `${baseUrl}/blog/category/${category.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
-    priority: 0.7,
+    priority: 0.5,
   }));
 
   return [...staticPages, ...blogPages, ...categoryPages];

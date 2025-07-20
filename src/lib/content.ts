@@ -1,6 +1,4 @@
-import contentData from '../../data/content.json';
-import promoData from '../../data/promo-codes.json';
-
+// 定義類型
 export interface BrandInfo {
   name: string;
   tagline: string;
@@ -10,19 +8,6 @@ export interface BrandInfo {
     whatsapp: string;
     email: string;
   };
-}
-
-export interface PromoCode {
-  id: number;
-  code: string;
-  type: 'fixed' | 'percentage';
-  value: number;
-  description: string;
-  isActive: boolean;
-  usageCount: number;
-  maxUsage: number;
-  validFrom: string;
-  validTo: string;
 }
 
 export interface PriceItem {
@@ -57,59 +42,80 @@ export interface BlogPost {
   category: string;
   author: string;
   isPublished: boolean;
+  slug?: string;
 }
 
+export interface PromoCode {
+  id: number;
+  code: string;
+  type: 'fixed' | 'percentage';
+  value: number;
+  description: string;
+  isActive: boolean;
+  usageCount: number;
+  maxUsage: number;
+  validFrom: string;
+  validTo: string;
+}
+
+// 直接導入JSON數據
+import contentData from '../../data/content.json';
+
+// 品牌信息
 export function getBrandInfo(): BrandInfo {
-  return contentData.brand;
+  return contentData.brand || {
+    name: "ReConfi",
+    tagline: "微笑設計專家",
+    description: "自信重新，由微笑開始",
+    contact: {
+      phone: "+852 6530 6270",
+      whatsapp: "+852 6530 6270",
+      email: "info@reconfi.com"
+    }
+  };
 }
 
+// 價格方案
 export function getPrices(): PriceItem[] {
-  return contentData.prices;
+  return contentData.prices || [];
 }
 
+// 客戶案例
 export function getCustomerCases(): CustomerCase[] {
-  return contentData.customerCases as CustomerCase[];
+  return (contentData.customerCases || []) as CustomerCase[];
 }
 
-export function getTestimonials(): CustomerCase[] {
-  return contentData.customerCases.filter(case_ => case_.type === 'testimonial') as CustomerCase[];
-}
-
-export function getBeforeAfterCases(): CustomerCase[] {
-  return contentData.customerCases.filter(case_ => case_.type === 'beforeAfter') as CustomerCase[];
-}
-
+// 部落格文章
 export function getBlogPosts(): BlogPost[] {
-  return contentData.blogPosts.filter(post => post.isPublished) as BlogPost[];
+  return contentData.blogPosts || [];
 }
 
-export function getPromoCodes(): PromoCode[] {
-  return promoData.promoCodes as PromoCode[];
+// 獲取單個部落格文章
+export function getBlogPost(slug: string): BlogPost | undefined {
+  const posts = getBlogPosts();
+  return posts.find((post: BlogPost) => post.slug === slug);
 }
 
+// 獲取部落格分類
+export function getBlogCategories() {
+  const posts = getBlogPosts();
+  const categories = [...new Set(posts.map((post: BlogPost) => post.category))];
+  return categories.map((category: string) => ({
+    name: category,
+    slug: category.toLowerCase().replace(/\s+/g, '-'),
+    count: posts.filter((post: BlogPost) => post.category === category).length
+  }));
+}
+
+// 根據分類獲取文章
+export function getBlogPostsByCategory(category: string): BlogPost[] {
+  const posts = getBlogPosts();
+  return posts.filter((post: BlogPost) => post.category === category);
+}
+
+// 驗證優惠碼
 export function validatePromoCode(code: string): PromoCode | null {
-  const promoCode = promoData.promoCodes.find(
-    promo => promo.code.toLowerCase() === code.toLowerCase() && promo.isActive
-  ) as PromoCode | undefined;
-  
-  if (!promoCode) return null;
-  
-  // 檢查使用次數
-  if (promoCode.usageCount >= promoCode.maxUsage) return null;
-  
-  // 檢查有效期
-  const now = new Date();
-  const validFrom = new Date(promoCode.validFrom);
-  const validTo = new Date(promoCode.validTo);
-  
-  if (now < validFrom || now > validTo) return null;
-  
-  return promoCode;
-}
-
-// 更新內容的函數（需要實現文件寫入）
-export async function updateContent(newContent: unknown) {
-  // 這裡可以實現保存到文件的邏輯
-  console.log('更新內容:', newContent);
-  return true;
+  // 這裡可以實現優惠碼驗證邏輯
+  // 暫時返回null
+  return null;
 } 
