@@ -1,76 +1,56 @@
-import { MetadataRoute } from 'next'
-import { getBlogPosts, getCategories } from '@/lib/airtable'
+import { MetadataRoute } from 'next';
+import { getBlogPosts } from '@/lib/airtable';
+import { getBlogPostsFromCSV } from '@/lib/csv-content';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://reconfihk.com'
+  const baseUrl = 'https://reconfihk.com';
   
-  // 獲取blog文章和分類
-  let posts: any[] = []
-  let categories: any[] = []
-  
-  try {
-    [posts, categories] = await Promise.all([
-      getBlogPosts(),
-      getCategories()
-    ])
-  } catch (error) {
-    console.log('無法獲取blog數據，使用靜態sitemap')
-  }
-  
-  const staticPages = [
+  // 基本頁面
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
+      changeFrequency: 'weekly',
       priority: 1,
     },
     {
       url: `${baseUrl}/blog`,
       lastModified: new Date(),
-      changeFrequency: 'daily' as const,
-      priority: 0.9,
+      changeFrequency: 'daily',
+      priority: 0.8,
     },
-    {
-      url: `${baseUrl}/#calculator`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/#testimonials`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/#team`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/#contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    },
-  ]
+  ];
+
+  // 動態部落格頁面
+  let blogPosts: Array<{ slug: string; publishedAt: string }> = [];
   
-  // 添加blog文章
-  const blogPosts = posts.map((post) => ({
+  try {
+    blogPosts = await getBlogPosts();
+  } catch (error) {
+    console.error('Error fetching blog posts for sitemap:', error);
+    // 如果Airtable失敗，使用CSV備用數據
+    try {
+      blogPosts = await getBlogPostsFromCSV();
+    } catch (csvError) {
+      console.error('Error fetching CSV data for sitemap:', csvError);
+    }
+  }
+
+  const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.publishedAt || new Date()),
+    lastModified: new Date(post.publishedAt),
     changeFrequency: 'monthly' as const,
-    priority: 0.8,
-  }))
-  
-  // 添加blog分類
-  const blogCategories = categories.map((category) => ({
-    url: `${baseUrl}/blog/category/${category.slug}`,
+    priority: 0.6,
+  }));
+
+  // 分類頁面
+  const categories = ['陶瓷貼片', '笑容設計', '牙科美容', '護理指南'];
+  const categoryPages: MetadataRoute.Sitemap = categories.map((category) => ({
+    url: `${baseUrl}/blog/category/${category.toLowerCase().replace(/\s+/g, '-')}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.7,
-  }))
-  
-  return [...staticPages, ...blogPosts, ...blogCategories]
+  }));
+
+  return [...staticPages, ...blogPages, ...categoryPages];
 } 

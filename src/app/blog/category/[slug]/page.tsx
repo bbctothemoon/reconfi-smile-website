@@ -1,13 +1,13 @@
-import { getBlogPosts, getCategories } from '@/lib/airtable';
-import Link from 'next/link';
-import { Calendar, Clock, Eye, Tag, ArrowLeft } from 'lucide-react';
-import { Metadata } from 'next';
+import { getBlogPostsByCategory, getCategories } from '@/lib/airtable';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { ArrowLeft, Calendar, Clock, Eye, Tag } from 'lucide-react';
+import { Metadata } from 'next';
 
 interface CategoryPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -18,45 +18,55 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
+  const { slug } = await params;
   const categories = await getCategories();
-  const category = categories.find(cat => cat.slug === params.slug);
+  const category = categories.find(cat => cat.slug === slug);
   
   if (!category) {
     return {
-      title: '分類不存在',
+      title: '分類未找到',
+      description: '抱歉，您要查找的分類不存在。',
     };
   }
 
   return {
-    title: `${category.name} - 牙科美容部落格`,
-    description: `探索 ${category.name} 相關的牙科美容知識和專業見解。ReConfi Smile 分享最新的牙科美容技術和案例。`,
+    title: `${category.name} - 牙科美容部落格 | ReConfi Smile`,
+    description: category.description,
     keywords: [
       category.name,
       '牙科美容',
       '陶瓷貼片',
-      '香港牙科',
-      '牙科知識'
+      '笑容設計',
+      '香港牙醫',
+      'ReConfi Smile'
     ],
     openGraph: {
       title: `${category.name} - 牙科美容部落格`,
-      description: `探索 ${category.name} 相關的牙科美容知識和專業見解。`,
+      description: category.description,
       type: 'website',
-      url: `https://reconfihk.com/blog/category/${params.slug}`,
+      url: `https://reconfihk.com/blog/category/${category.slug}`,
+      siteName: 'ReConfi Smile',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${category.name} - 牙科美容部落格`,
+      description: category.description,
     },
     alternates: {
-      canonical: `/blog/category/${params.slug}`,
+      canonical: `/blog/category/${category.slug}`,
     },
   };
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
+  const { slug } = await params;
   const [posts, categories] = await Promise.all([
-    getBlogPosts(),
+    getBlogPostsByCategory(slug),
     getCategories()
   ]);
-
-  const category = categories.find(cat => cat.slug === params.slug);
   
+  const category = categories.find(cat => cat.slug === slug);
+
   if (!category) {
     notFound();
   }
@@ -106,11 +116,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 key={cat.id}
                 href={`/blog/category/${cat.slug}`}
                 className={`px-4 py-2 rounded-full transition-colors ${
-                  cat.slug === params.slug
+                  cat.slug === slug
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 }`}
-                style={cat.slug !== params.slug ? { backgroundColor: cat.color + '20', color: cat.color } : {}}
+                style={cat.slug !== slug ? { backgroundColor: cat.color + '20', color: cat.color } : {}}
               >
                 {cat.name}
               </Link>
@@ -218,7 +228,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             "@type": "CollectionPage",
             "name": `${category.name} - 牙科美容部落格`,
             "description": `探索 ${category.name} 相關的牙科美容知識和專業見解`,
-            "url": `https://reconfihk.com/blog/category/${params.slug}`,
+            "url": `https://reconfihk.com/blog/category/${slug}`,
             "mainEntity": {
               "@type": "ItemList",
               "itemListElement": categoryPosts.map((post, index) => ({
