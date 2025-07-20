@@ -29,14 +29,14 @@ export default function TestimonialsWithBeforeAfter() {
                   key={customerCase.id}
                   className="w-96 flex-shrink-0"
                 >
-                  {/* Customer Photo - 1080x1080 */}
+                  {/* Customer Photo - Instagram 3:4 ratio */}
                   <div className="bg-white rounded-2xl shadow-lg p-4 mb-4">
-                    <div className="w-full aspect-square bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden">
+                    <div className="w-full bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden" style={{ aspectRatio: '3/4' }}>
                       {!imageErrors[customerCase.id] ? (
                         <img
                           src={customerCase.image}
                           alt={customerCase.title}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover object-center"
                           onError={() => setImageErrors(prev => ({...prev, [customerCase.id]: true}))}
                         />
                       ) : (
