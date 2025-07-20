@@ -1,0 +1,102 @@
+{
+  "name": "ReConfi Smile - 專業陶瓷貼片服務 | 香港牙科美容專家",
+  "short_name": "ReConfi Smile",
+  "description": "ReConfi Smile 提供專業的陶瓷貼片服務，讓您擁有完美的笑容。使用國際品牌材料，資深牙醫團隊，為您度身訂造自然、自信的完美笑容。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "zh-HK",
+  "dir": "ltr",
+  "categories": ["medical", "health", "lifestyle", "beauty"],
+  "icons": [
+    {
+      "src": "/logo-blue.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo-blue.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo-blue.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-blue.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-blue.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-blue.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-blue.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-blue.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "預約諮詢",
+      "short_name": "預約",
+      "description": "立即預約牙科美容諮詢",
+      "url": "/#contact",
+      "icons": [
+        {
+          "src": "/logo-blue.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "價格計算",
+      "short_name": "計算",
+      "description": "計算陶瓷貼片價格",
+      "url": "/#calculator",
+      "icons": [
+        {
+          "src": "/logo-blue.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "部落格",
+      "short_name": "部落格",
+      "description": "瀏覽牙科美容知識",
+      "url": "/blog",
+      "icons": [
+        {
+          "src": "/logo-blue.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+} 

@@ -2,6 +2,7 @@ import { getBlogPostBySlug, getBlogPosts } from '@/lib/airtable';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Clock, Eye, Tag, Share2 } from 'lucide-react';
+import { Metadata } from 'next';
 
 interface BlogPostPageProps {
   params: {
@@ -16,6 +17,57 @@ export async function generateStaticParams() {
   }));
 }
 
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  const post = await getBlogPostBySlug(params.slug);
+  
+  if (!post) {
+    return {
+      title: '文章未找到',
+      description: '抱歉，您要查找的文章不存在。',
+    };
+  }
+
+  return {
+    title: `${post.title} | ReConfi Smile 牙科美容部落格`,
+    description: post.excerpt,
+    keywords: [
+      ...post.tags,
+      '牙科美容',
+      '陶瓷貼片',
+      '笑容設計',
+      '香港牙醫',
+      'ReConfi Smile'
+    ],
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      url: `https://reconfihk.com/blog/${post.slug}`,
+      siteName: 'ReConfi Smile',
+      images: post.featuredImage ? [
+        {
+          url: post.featuredImage,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        }
+      ] : ['/logo-blue.png'],
+      publishedTime: post.publishedAt,
+      authors: [post.author],
+      tags: post.tags,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: post.featuredImage ? [post.featuredImage] : ['/logo-blue.png'],
+    },
+    alternates: {
+      canonical: `/blog/${post.slug}`,
+    },
+  };
+}
+
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const post = await getBlogPostBySlug(params.slug);
 
@@ -23,8 +75,46 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
+  // 結構化數據
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.excerpt,
+    "image": post.featuredImage || "https://reconfihk.com/logo-blue.png",
+    "author": {
+      "@type": "Person",
+      "name": post.author
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "ReConfi Smile",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://reconfihk.com/logo-blue.png"
+      }
+    },
+    "datePublished": post.publishedAt,
+    "dateModified": post.publishedAt,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://reconfihk.com/blog/${post.slug}`
+    },
+    "keywords": post.tags.join(", "),
+    "articleSection": "牙科美容",
+    "inLanguage": "zh-HK"
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* 結構化數據 */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData)
+        }}
+      />
+      
       {/* Header */}
       <div className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-6">
@@ -37,7 +127,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </Link>
         </div>
       </div>
-
+      
       {/* Article Content */}
       <article className="py-12">
         <div className="container mx-auto px-4">
@@ -58,7 +148,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   {post.views} 次瀏覽
                 </div>
               </div>
-
+              
               <h1 className="text-4xl font-bold text-gray-900 mb-4">
                 {post.title}
               </h1>
@@ -72,10 +162,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <span className="text-gray-700">作者：{post.author}</span>
                 </div>
                 
-                <button className="flex items-center text-gray-500 hover:text-gray-700">
+                <div className="flex items-center text-gray-500">
                   <Share2 className="w-4 h-4 mr-1" />
-                  分享
-                </button>
+                  <span>分享</span>
+                </div>
               </div>
             </header>
 
@@ -125,7 +215,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </div>
               </div>
             </div>
-
+            
             {/* CTA Section */}
             <div className="mt-12 bg-blue-600 rounded-lg p-8 text-white text-center">
               <h3 className="text-2xl font-bold mb-4">
