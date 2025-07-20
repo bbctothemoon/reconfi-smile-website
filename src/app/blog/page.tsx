@@ -1,104 +1,138 @@
+import { getBlogPosts, getCategories } from '@/lib/airtable';
 import Link from 'next/link';
-import { ArrowLeft, Calendar, Clock } from 'lucide-react';
-import { getBlogPosts } from '@/lib/content';
+import { Calendar, Clock, Eye, Tag } from 'lucide-react';
 
-export default function BlogPage() {
-  const blogPosts = getBlogPosts();
+export default async function BlogPage() {
+  const [posts, categories] = await Promise.all([
+    getBlogPosts(),
+    getCategories()
+  ]);
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center text-blue-600 hover:text-blue-700 mr-6">
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              返回首頁
-            </Link>
-            <h1 className="text-2xl font-bold text-gray-900">ReConfi 牙科美容專欄</h1>
+      {/* Hero Section */}
+      <section className="bg-white py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              牙科美容部落格
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              分享最新的牙科美容知識、技術趨勢和專業見解
+            </p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            專業牙科美容知識
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            分享最新的牙科美容技術、治療方案和護理知識，幫助您了解如何擁有完美的笑容
-          </p>
-        </div>
-
-        {/* Blog Posts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogPosts.map((post) => (
-            <article key={post.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="p-6">
-                <div className="flex items-center mb-3">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                    {post.category}
-                  </span>
-                </div>
-                
-                <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
-                  {post.title}
-                </h3>
-                
-                <p className="text-gray-600 mb-4 line-clamp-3">
-                  {post.excerpt}
-                </p>
-                
-                <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                  <div className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    {new Date(post.date).toLocaleDateString('zh-TW')}
-                  </div>
-                  <div className="flex items-center">
-                    <Clock className="w-4 h-4 mr-1" />
-                    {post.readTime}
-                  </div>
-                </div>
-                
+      {/* Categories */}
+      {categories.length > 0 && (
+        <section className="bg-white border-b">
+          <div className="container mx-auto px-4 py-8">
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link
+                href="/blog"
+                className="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
+              >
+                全部
+              </Link>
+              {categories.map((category) => (
                 <Link
-                  href={`/blog/${post.id}`}
-                  className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
+                  key={category.id}
+                  href={`/blog/category/${category.slug}`}
+                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors"
+                  style={{ backgroundColor: category.color + '20', color: category.color }}
                 >
-                  閱讀全文
-                  <ArrowLeft className="w-4 h-4 ml-1 rotate-180" />
+                  {category.name}
                 </Link>
-              </div>
-            </article>
-          ))}
-        </div>
-
-        {/* CTA Section */}
-        <div className="mt-16 text-center">
-          <div className="bg-blue-600 rounded-2xl p-8 text-white">
-            <h3 className="text-2xl font-bold mb-4">
-              準備好開始您的笑容蛻變之旅了嗎？
-            </h3>
-            <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
-              我們的專業團隊隨時為您提供諮詢服務，為您度身訂造最適合的治療方案
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://wa.me/85265306270"
-                className="inline-flex items-center px-8 py-4 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
-              >
-                立即預約諮詢
-              </a>
-              <a
-                href="#calculator"
-                className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-600 transition-colors"
-              >
-                查看價格方案
-              </a>
+              ))}
             </div>
           </div>
+        </section>
+      )}
+
+      {/* Blog Posts */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          {posts.length === 0 ? (
+            <div className="text-center">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                目前沒有文章
+              </h2>
+              <p className="text-gray-600">
+                敬請期待更多精彩內容
+              </p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {posts.map((post) => (
+                <article
+                  key={post.id}
+                  className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+                >
+                  {post.featuredImage && (
+                    <div className="h-48 bg-gray-200">
+                      <img
+                        src={post.featuredImage}
+                        alt={post.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+
+                  <div className="p-6">
+                    <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                      <div className="flex items-center">
+                        <Calendar className="w-4 h-4 mr-1" />
+                        {new Date(post.publishedAt).toLocaleDateString('zh-TW')}
+                      </div>
+                      <div className="flex items-center">
+                        <Clock className="w-4 h-4 mr-1" />
+                        {post.readTime} 分鐘
+                      </div>
+                      <div className="flex items-center">
+                        <Eye className="w-4 h-4 mr-1" />
+                        {post.views}
+                      </div>
+                    </div>
+
+                    <h2 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
+                      <Link href={`/blog/${post.slug}`} className="hover:text-blue-600">
+                        {post.title}
+                      </Link>
+                    </h2>
+
+                    <p className="text-gray-600 mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center text-sm text-gray-500">
+                        <span>作者：{post.author}</span>
+                      </div>
+                      
+                      {post.tags.length > 0 && (
+                        <div className="flex items-center">
+                          <Tag className="w-4 h-4 text-gray-400 mr-1" />
+                          <span className="text-sm text-gray-500">
+                            {post.tags[0]}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="inline-block mt-4 text-blue-600 hover:text-blue-700 font-medium"
+                    >
+                      閱讀更多 →
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
-      </div>
+      </section>
     </div>
   );
 } 
