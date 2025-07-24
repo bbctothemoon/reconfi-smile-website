@@ -13,11 +13,6 @@ export default function USP() {
       description: "僅需2-3次診療即可完成"
     },
     {
-      icon: Star,
-      title: "專業團隊",
-      description: "資深牙醫團隊，豐富的笑容設計經驗"
-    },
-    {
       icon: Users,
       title: "度身訂造",
       description: "根據每位客戶需求，設計專屬笑容方案"

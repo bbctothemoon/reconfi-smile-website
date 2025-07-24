@@ -1,15 +1,12 @@
 import { NextResponse } from 'next/server';
-import { getTestimonials } from '@/lib/airtable';
+import { getAirtableRecords } from '@/lib/airtable-client';
 
 export async function GET() {
   try {
-    const testimonials = await getTestimonials();
-    return NextResponse.json(testimonials);
-  } catch (error) {
-    console.error('Error in testimonials API:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch testimonials' },
-      { status: 500 }
-    );
+    // Airtable table 名稱要與你 Airtable 介面一致
+    const records = await getAirtableRecords('Testimonials & Cases');
+    return NextResponse.json(records);
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 } 

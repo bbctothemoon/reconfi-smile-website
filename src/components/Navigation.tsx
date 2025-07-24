@@ -37,13 +37,10 @@ export default function Navigation() {
                 價格方案
               </Link>
               <Link href="#testimonials" className="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                客戶評價
+                真實體驗
               </Link>
               <Link href="/blog" className="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 專業專欄
-              </Link>
-              <Link href="#before-after" className="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                前後對比
               </Link>
               <Link href="#contact" className="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 聯絡我們
@@ -101,7 +98,7 @@ export default function Navigation() {
               className="text-gray-900 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors"
               onClick={() => setIsOpen(false)}
             >
-              客戶評價
+              真實體驗
             </Link>
             <Link
               href="/blog"
@@ -109,13 +106,6 @@ export default function Navigation() {
               onClick={() => setIsOpen(false)}
             >
               專業專欄
-            </Link>
-            <Link
-              href="#before-after"
-              className="text-gray-900 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              前後對比
             </Link>
             <Link
               href="#contact"
