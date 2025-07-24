@@ -26,7 +26,7 @@ async function airtableRequest(table: string, method = 'GET', body?: any, record
 
 export async function getAirtableRecords(table: string) {
   const data = await airtableRequest(table, 'GET');
-  return data.records;
+  return (data as { records: unknown[] }).records;
 }
 
 export async function createAirtableRecord(table: string, fields: any) {
