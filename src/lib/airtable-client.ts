@@ -1,3 +1,4 @@
+
 import fetch from 'node-fetch';
 
 const AIRTABLE_API_URL = 'https://api.airtable.com/v0';
@@ -39,4 +40,14 @@ export async function updateAirtableRecord(table: string, recordId: string, fiel
 
 export async function deleteAirtableRecord(table: string, recordId: string) {
   return await airtableRequest(table, 'DELETE', undefined, recordId);
+}
+
+export async function GET() {
+  return new Response(
+    JSON.stringify({
+      AIRTABLE_API_KEY: process.env.AIRTABLE_API_KEY,
+      AIRTABLE_BASE_ID: process.env.AIRTABLE_BASE_ID,
+    }),
+    { status: 200 }
+  );
 } 
