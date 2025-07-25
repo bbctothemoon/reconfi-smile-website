@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Calendar, Clock, User, Tag } from 'lucide-react';
 
 export default function BlogPage() {
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<unknown[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

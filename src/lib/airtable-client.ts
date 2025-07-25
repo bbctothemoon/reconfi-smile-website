@@ -9,10 +9,10 @@ if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
   throw new Error('請設定 AIRTABLE_API_KEY 及 AIRTABLE_BASE_ID 環境變數');
 }
 
-async function airtableRequest(table: string, method = 'GET', body?: any, recordId?: string) {
+async function airtableRequest(table: string, method = 'GET', body?: unknown, recordId?: string) {
   let url = `${AIRTABLE_API_URL}/${AIRTABLE_BASE_ID}/${encodeURIComponent(table)}`;
   if (recordId) url += `/${recordId}`;
-  const options: any = {
+  const options: Record<string, unknown> = {
     method,
     headers: {
       'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
@@ -30,11 +30,11 @@ export async function getAirtableRecords(table: string) {
   return (data as { records: unknown[] }).records;
 }
 
-export async function createAirtableRecord(table: string, fields: any) {
+export async function createAirtableRecord(table: string, fields: unknown) {
   return await airtableRequest(table, 'POST', { fields });
 }
 
-export async function updateAirtableRecord(table: string, recordId: string, fields: any) {
+export async function updateAirtableRecord(table: string, recordId: string, fields: unknown) {
   return await airtableRequest(table, 'PATCH', { fields }, recordId);
 }
 

@@ -6,7 +6,8 @@ export async function GET() {
     // Airtable table 名稱要與你 Airtable 介面一致
     const records = await getAirtableRecords('Testimonials & Cases');
     return NextResponse.json(records);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const errMsg = error instanceof Error ? error.message : String(error);
+    return NextResponse.json({ error: errMsg }, { status: 500 });
   }
 } 
