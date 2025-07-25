@@ -39,9 +39,6 @@ export default function Navigation() {
               <Link href="#testimonials" className="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 真實體驗
               </Link>
-              <Link href="/blog" className="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                專業專欄
-              </Link>
               <Link href="#contact" className="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 聯絡我們
               </Link>
@@ -99,13 +96,6 @@ export default function Navigation() {
               onClick={() => setIsOpen(false)}
             >
               真實體驗
-            </Link>
-            <Link
-              href="/blog"
-              className="text-gray-900 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              專業專欄
             </Link>
             <Link
               href="#contact"
